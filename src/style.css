@@ -1,0 +1,118 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: block;
+}
+
+html {
+  --background-color: #fffde7;
+  --sign: ">";
+}
+/* Layout */
+
+body {
+  height: 100vh;
+  font-size: 16px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  background-color: var(--background-color);
+  overflow: hidden;
+}
+
+ul {
+  font-size: 2rem;
+}
+
+li {
+  display: block;
+  line-height: 1.5;
+  pointer-events: all;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+a:visited {
+  color: inherit;
+}
+
+.menu {
+  position: relative;
+  left: -26rem;
+  width: 26rem;
+  margin-top: 2rem;
+  padding-top: 0.1px;
+  padding-left: 1rem;
+  padding-bottom: 2rem;
+  background-color: var(--background-color);
+  border-radius: 0 0 10px 0;
+  transition: 300ms left;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.menu > h3 {
+  margin: 2rem 0;
+}
+
+.menu::after {
+  position: absolute;
+  content: var(--sign);
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  right: -3rem;
+  top: 0;
+  background-color: inherit;
+  cursor: pointer;
+  font-size: 3.5rem;
+  text-align: center;
+  line-height: 3rem;
+  pointer-events: all;
+  border-radius: 0 10px 10px 0;
+  box-shadow: inherit;
+  clip-path: inset(-5rem -5rem -5rem 0);
+}
+
+.menu li:last-of-type {
+  margin-bottom: 2rem;
+}
+
+.open-menu {
+  left: 0;
+}
+
+.ui {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+}
+
+.ui > a {
+  background-color: inherit;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+iframe {
+  height: 100%;
+  width: 100%;
+  border: 0;
+}
