@@ -4,36 +4,44 @@ import urls from "./urls.json";
 /**
  * Helpers
  */
+const defaultUrl = "practice-app";
 
 const createElem = (tag: string) => document.createElement(tag);
 
 const navigateTo = (url: string) => window.history.pushState(null, "", url);
 
-const isCurrent = (url: string) => window.location.pathname === url;
+const isCurrent = (url: string) => window.location.pathname.includes(url);
+
+const isValidPath = () =>
+  urls.reduce(
+    (isValid, [url, _]) => isValid || url === window.location.pathname.replaceAll("/", ""),
+    false
+  );
 
 /**
  * Selectors
  */
 const menuElem = document.querySelector<HTMLUListElement>(".menu")!;
+const prevFrame = document.querySelector("iframe")!;
 
-const updateIframe = (src: string, container: HTMLElement) => {
-  const prevFrame = container.querySelector("iframe");
-  prevFrame!.contentWindow!.onload = () => prevFrame?.contentWindow?.focus();
+const updateIframe = (src: string) => {
+  src = src.endsWith("/") ? src : src + "/";
 
-  if (!prevFrame) {
-    const frame = document.createElement("iframe");
-    frame.src = src;
-    container.append(frame);
-  } else {
-    prevFrame.src = src;
-  }
+  prevFrame.src = src;
+};
+
+const display404 = () => {
+  document.body.innerHTML = `
+    <h1 style="text-align:center;line-height: 100vh;margin: 0;">Woops, that doesn't look right...</h1>
+  `;
 };
 
 const loadCurrentUrl = (url?: string) => {
-  url = url ? `/src${url}` : "/src/practice-app";
+  url = url ? `/src${url}` : `/src/${defaultUrl}`;
+  console.log(isValidPath());
 
-  updateIframe(url, document.body);
-  setupMenu(urls);
+  if (isValidPath()) updateIframe(url);
+  else display404();
 };
 
 const setupMenu = (urls: string[][]) => {
@@ -43,11 +51,13 @@ const setupMenu = (urls: string[][]) => {
     const li = createElem("li") as HTMLUListElement;
     const a = createElem("a") as HTMLAnchorElement;
 
+    url = url.startsWith("/") ? url : "/" + url;
+
     if (isCurrent(url)) {
       a.innerText = "=> " + name;
     } else {
       a.innerText = name;
-      a.href = "#";
+      a.href = "";
       a.addEventListener("click", () => navigateTo(url));
     }
 
@@ -72,3 +82,4 @@ const toggleMenu = (_ev: Event, menuElem: HTMLUListElement) => {
 menuElem.addEventListener("click", ev => toggleMenu(ev, menuElem));
 window.addEventListener("popstate", () => loadCurrentUrl(window.location.pathname));
 window.addEventListener("DOMContentLoaded", () => loadCurrentUrl(window.location.pathname));
+setupMenu(urls);
