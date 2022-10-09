@@ -6,12 +6,11 @@ import { BufferAttribute, BufferGeometry, Points, ShaderMaterial } from "three";
 
 import vertexShader from "./shaders/galaxy/vert.glsl?raw";
 import fragmentShader from "./shaders/galaxy/frag.glsl?raw";
+import type { Nullable } from "../../types";
 
 /**
  * Base
  */
-type Nullable<T> = T | null;
-
 // Debug
 const gui = new dat.GUI();
 
