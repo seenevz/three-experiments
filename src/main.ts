@@ -4,7 +4,8 @@ import urls from "./urls.json";
 /**
  * Helpers
  */
-const defaultUrl = "practice-app";
+const defaultUrl = urls[4][0];
+console.log(defaultUrl);
 
 const createElem = (tag: string) => document.createElement(tag);
 
@@ -16,7 +17,7 @@ const isValidPath = () =>
   urls.reduce(
     (isValid, [url, _]) => isValid || url === window.location.pathname.replaceAll("/", ""),
     false
-  );
+  ) || window.location.pathname === "/";
 
 /**
  * Selectors
@@ -37,8 +38,7 @@ const display404 = () => {
 };
 
 const loadCurrentUrl = (url?: string) => {
-  url = url ? `/src${url}` : `/src/${defaultUrl}`;
-  console.log(isValidPath());
+  url = url === "/" ? `/src/${defaultUrl}` : `/src${url}`;
 
   if (isValidPath()) updateIframe(url);
   else display404();
